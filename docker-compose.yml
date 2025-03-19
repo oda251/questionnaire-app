@@ -30,12 +30,14 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development # 開発環境指定
-      # SQLiteを使用するので、以下は不要
-      - DATABASE_HOST=db
-      - DATABASE_PORT=3306
-      - DATABASE_USERNAME=user
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=questionnaire_db
+      - DATABASE_TYPE=sqlite # SQLiteを使用
+      - DATABASE_STORAGE=:memory: # インメモリデータベース
+      # MySQLの設定は開発環境では使用しない
+      # - DATABASE_HOST=db
+      # - DATABASE_PORT=3306
+      # - DATABASE_USERNAME=user
+      # - DATABASE_PASSWORD=password
+      # - DATABASE_NAME=questionnaire_db
     networks:
       - app-network
 
@@ -60,3 +62,4 @@ networks:
 
 volumes:
   mysql_data:
+    
