@@ -8,23 +8,30 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Question } from './Question';
 import { Answer } from './Answer';
 
+@ObjectType()
 @Entity('choices')
 export class Choice {
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
   question_id: number;
 
+  @Field()
   @Column()
   choice_text: string;
 
+  @Field()
   @CreateDateColumn()
   created_at: Date;
 
+  @Field()
   @UpdateDateColumn()
   updated_at: Date;
 

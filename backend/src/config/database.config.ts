@@ -28,7 +28,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     : {}),
 
   // 共通設定
-  entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
+  entities: [join(__dirname, '..', 'entities', '*.entity.{ts}')],
   synchronize: !isProduction, // 開発環境でのみ自動同期を有効に
   logging: !isProduction,
 };

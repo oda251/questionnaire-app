@@ -7,23 +7,30 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from './User';
 import { Organization } from './Organization';
 
+@ObjectType()
 @Entity('user_organizations')
 export class UserOrganization {
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column()
   user_id: number;
 
+  @Field()
   @Column()
   organization_id: number;
 
+  @Field()
   @CreateDateColumn()
   created_at: Date;
 
+  @Field()
   @UpdateDateColumn()
   updated_at: Date;
 
