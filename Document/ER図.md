@@ -67,6 +67,8 @@ erDiagram
         int id PK
         int questionnaire_id FK
         string question_text
+        enum question_type "SINGLE_CHOICE, MULTIPLE_CHOICE, FREE_TEXT"
+        boolean is_required
         datetime created_at
         datetime updated_at
     }
@@ -74,7 +76,6 @@ erDiagram
     choices {
         int id PK
         int question_id FK
-        boolean mandatory
         string choice_text
         datetime created_at
         datetime updated_at
@@ -91,7 +92,9 @@ erDiagram
     answers {
         int id PK
         int response_id FK
-        int choice_id FK
+        int question_id FK
+        int choice_id FK "NULL for free text answers"
+        string text_answer "NULL for choice answers"
         datetime created_at
     }
 
@@ -106,5 +109,6 @@ erDiagram
     questions ||--o{ choices : "has"
     questionnaires ||--o{ responses : "receives"
     responses ||--o{ answers : "includes"
+    questions ||--o{ answers : "answers_to"
     choices ||--o{ answers : "selected_in"
 ```

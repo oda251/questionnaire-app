@@ -22,36 +22,37 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: development # 開発環境用のターゲット
     ports:
       - "4000:4000"
     volumes:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=development # 開発環境指定
+      # SQLiteを使用するので、以下は不要
       - DATABASE_HOST=db
       - DATABASE_PORT=3306
       - DATABASE_USERNAME=user
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=questionnaire_db
-    depends_on:
-      - db
     networks:
       - app-network
 
-  db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - MYSQL_DATABASE=questionnaire_db
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=password
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - app-network
+  # 開発時はコメントアウト可能
+  # db:
+  #   image: mysql:8.0
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=rootpassword
+  #     - MYSQL_DATABASE=questionnaire_db
+  #     - MYSQL_USER=user
+  #     - MYSQL_PASSWORD=password
+  #   volumes:
+  #     - ./db:/var/lib/mysql
+  #   networks:
+  #     - app-network
 
 networks:
   app-network:
