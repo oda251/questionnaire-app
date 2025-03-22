@@ -32,6 +32,7 @@ services:
       - DATABASE_USERNAME=user
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=questionnaire_db
+      - JWT_SECRET=secret
     depends_on:
       - db
     networks:
