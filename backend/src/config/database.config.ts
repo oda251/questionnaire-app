@@ -1,5 +1,17 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { join } from 'path';
+import {
+  User,
+  UserOrganization,
+  Questionnaire,
+  QuestionnaireOrganization,
+  Question,
+  Response,
+  UserRole,
+  Organization,
+  Role,
+  Answer,
+  Choice,
+} from '../entities';
 
 // 環境変数から設定を取得
 const databaseType = process.env.DATABASE_TYPE || 'sqlite';
@@ -28,7 +40,19 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
     : {}),
 
   // 共通設定
-  entities: [join(__dirname, '..', 'entities', '*.entity.{ts}')],
+  entities: [
+    User,
+    Questionnaire,
+    QuestionnaireOrganization,
+    Question,
+    Response,
+    UserOrganization,
+    UserRole,
+    Organization,
+    Role,
+    Answer,
+    Choice,
+  ],
   synchronize: !isProduction, // 開発環境でのみ自動同期を有効に
   logging: !isProduction,
 };

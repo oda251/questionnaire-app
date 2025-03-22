@@ -19,11 +19,11 @@ export class Choice {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   question_id: number;
 
-  @Field()
+  @Field(() => String)
   @Column()
   choice_text: string;
 

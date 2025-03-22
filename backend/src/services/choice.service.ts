@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Choice } from '../graphql/types';
+import { Choice } from '../entities';
 import { CreateChoiceInput } from '../graphql/inputs/create-choice.input';
 import { UpdateChoiceInput } from '../graphql/inputs/update-choice.input';
 

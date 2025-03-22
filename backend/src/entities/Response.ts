@@ -18,19 +18,19 @@ export class Response {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   questionnaire_id: number;
 
-  @Field()
+  @Field(() => String)
   @Column()
   respondent_token: string;
 
-  @Field()
+  @Field(() => Date)
   @Column()
   ip_address: string;
 
-  @Field()
+  @Field(() => Date)
   @CreateDateColumn()
   created_at: Date;
 

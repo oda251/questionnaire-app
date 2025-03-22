@@ -8,21 +8,21 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Questionnaire } from './Questionnaire';
+import { User } from './User';
 import { Organization } from './Organization';
 
 @ObjectType()
-@Entity('questionnaire_organizations')
-export class QuestionnaireOrganization {
+@Entity('user_organizations')
+export class UserOrganization {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
-  questionnaire_id: number;
+  user_id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   organization_id: number;
 
@@ -35,16 +35,13 @@ export class QuestionnaireOrganization {
   updated_at: Date;
 
   // Relations
-  @ManyToOne(
-    () => Questionnaire,
-    (questionnaire) => questionnaire.questionnaireOrganizations,
-  )
-  @JoinColumn({ name: 'questionnaire_id' })
-  questionnaire: Questionnaire;
+  @ManyToOne(() => User, (user) => user.userOrganizations)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @ManyToOne(
     () => Organization,
-    (organization) => organization.questionnaireOrganizations,
+    (organization) => organization.userOrganizations,
   )
   @JoinColumn({ name: 'organization_id' })
   organization: Organization;
