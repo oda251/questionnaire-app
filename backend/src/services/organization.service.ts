@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Organization } from '../graphql/types';
+import { Organization } from '../entities';
 import { CreateOrganizationInput } from '../graphql/inputs/create-organization.input';
 import { UpdateOrganizationInput } from '../graphql/inputs/update-organization.input';
 

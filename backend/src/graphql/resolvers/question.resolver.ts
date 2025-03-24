@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { QuestionService } from '../../services/question.service';
-import { Question } from '../types';
+import { Question } from '../../entities';
 import { CreateQuestionInput } from '../inputs/create-question.input';
 import { UpdateQuestionInput } from '../inputs/update-question.input';
 

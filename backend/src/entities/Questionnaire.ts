@@ -21,35 +21,35 @@ export class Questionnaire {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   user_id: number;
 
-  @Field()
+  @Field(() => String)
   @Column()
   title: string;
 
-  @Field()
+  @Field(() => String)
   @Column()
   description: string;
 
-  @Field()
+  @Field(() => String)
   @Column()
   access_url: string;
 
-  @Field()
+  @Field(() => Boolean)
   @Column()
   is_public: boolean;
 
   @Field(() => Date, { nullable: true })
-  @Column({ nullable: true })
+  @Column('datetime', { nullable: true })
   expiry_date: Date | null;
 
-  @Field()
+  @Field(() => Date, { nullable: true })
   @CreateDateColumn()
   created_at: Date;
 
-  @Field()
+  @Field(() => Date, { nullable: true })
   @UpdateDateColumn()
   updated_at: Date;
 

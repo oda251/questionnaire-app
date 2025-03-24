@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { RoleService } from '../../services/role.service';
-import { Role } from '../types';
+import { Role } from '../../entities';
 import { CreateRoleInput } from '../inputs/create-role.input';
 import { UpdateRoleInput } from '../inputs/update-role.input';
 

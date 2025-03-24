@@ -3,12 +3,12 @@ import { IsString, MinLength } from 'class-validator';
 
 @InputType()
 export class CreateOrganizationInput {
-  @Field()
+  @Field(() => String)
   @IsString()
   @MinLength(3)
   name: string;
 
-  @Field()
+  @Field(() => String)
   @IsString()
   description: string;
 }

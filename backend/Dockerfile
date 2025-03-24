@@ -7,18 +7,13 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
-
 FROM node:23-bullseye-slim as production
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --only=production
 
 COPY . .
 
 EXPOSE 4000
-
-# 開発モードでアプリケーションを実行
-CMD ["npm", "run", "start:dev"]
