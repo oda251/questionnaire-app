@@ -1,0 +1,59 @@
+query GetQuestions {
+  questions {
+    id
+    questionnaire_id
+    question_text
+    question_type
+    is_required
+    created_at
+    updated_at
+    choices {
+      id
+      choice_text
+      created_at
+      updated_at
+    }
+  }
+}
+
+query GetQuestion($id: String!) {
+  question(id: $id) {
+    id
+    questionnaire_id
+    question_text
+    question_type
+    is_required
+    created_at
+    updated_at
+    choices {
+      id
+      choice_text
+      created_at
+      updated_at
+    }
+  }
+}
+
+mutation CreateQuestion($input: CreateQuestionInput!) {
+  createQuestion(input: $input) {
+    id
+    questionnaire_id
+    question_text
+    question_type
+    is_required
+  }
+}
+
+mutation UpdateQuestion($input: UpdateQuestionInput!) {
+  updateQuestion(input: $input) {
+    id
+    questionnaire_id
+    question_text
+    question_type
+    is_required
+  }
+}
+
+mutation DeleteQuestion($id: String!) {
+  deleteQuestion(id: $id)
+}

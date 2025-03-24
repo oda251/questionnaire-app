@@ -1,0 +1,39 @@
+query GetChoices {
+  choices {
+    id
+    question_id
+    choice_text
+    created_at
+    updated_at
+  }
+}
+
+query GetChoice($id: String!) {
+  choice(id: $id) {
+    id
+    question_id
+    choice_text
+    created_at
+    updated_at
+  }
+}
+
+mutation CreateChoice($input: CreateChoiceInput!) {
+  createChoice(input: $input) {
+    id
+    question_id
+    choice_text
+  }
+}
+
+mutation UpdateChoice($input: UpdateChoiceInput!) {
+  updateChoice(input: $input) {
+    id
+    question_id
+    choice_text
+  }
+}
+
+mutation DeleteChoice($id: String!) {
+  deleteChoice(id: $id)
+}

@@ -1,0 +1,39 @@
+query GetOrganizations {
+  organizations {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+
+query GetOrganization($id: String!) {
+  organization(id: $id) {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+
+mutation CreateOrganization($input: CreateOrganizationInput!) {
+  createOrganization(input: $input) {
+    id
+    name
+    description
+  }
+}
+
+mutation UpdateOrganization($input: UpdateOrganizationInput!) {
+  updateOrganization(input: $input) {
+    id
+    name
+    description
+  }
+}
+
+mutation DeleteOrganization($id: String!) {
+  deleteOrganization(id: $id)
+}

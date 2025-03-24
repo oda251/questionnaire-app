@@ -1,0 +1,39 @@
+query GetRoles {
+  roles {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+
+query GetRole($id: String!) {
+  role(id: $id) {
+    id
+    name
+    description
+    created_at
+    updated_at
+  }
+}
+
+mutation CreateRole($input: CreateRoleInput!) {
+  createRole(input: $input) {
+    id
+    name
+    description
+  }
+}
+
+mutation UpdateRole($input: UpdateRoleInput!) {
+  updateRole(input: $input) {
+    id
+    name
+    description
+  }
+}
+
+mutation DeleteRole($id: String!) {
+  deleteRole(id: $id)
+}

@@ -1,0 +1,103 @@
+query GetQuestionnaires {
+  questionnaires {
+    id
+    user_id
+    title
+    description
+    is_public
+    expiry_date
+    created_at
+    updated_at
+    access_url
+    organizations {
+      id
+      name
+    }
+    questions {
+      id
+      question_text
+      question_type
+      is_required
+      created_at
+      updated_at
+    }
+  }
+}
+
+query GetQuestionnaire($id: String!) {
+  questionnaire(id: $id) {
+    id
+    user_id
+    title
+    description
+    is_public
+    expiry_date
+    created_at
+    updated_at
+    access_url
+    organizations {
+      id
+      name
+    }
+    questions {
+      id
+      question_text
+      question_type
+      is_required
+      created_at
+      updated_at
+    }
+  }
+}
+
+query GetQuestionnairesByUserId($user_id: String!) {
+  questionnairesByUserId(userId: $user_id) {
+    id
+    user_id
+    title
+    description
+    is_public
+    expiry_date
+    created_at
+    updated_at
+    access_url
+    organizations {
+      id
+      name
+    }
+    questions {
+      id
+      question_text
+      question_type
+      is_required
+      created_at
+      updated_at
+    }
+  }
+}
+
+mutation CreateQuestionnaire($input: CreateQuestionnaireInput!) {
+  createQuestionnaire(input: $input) {
+    id
+    user_id
+    title
+    description
+    is_public
+    expiry_date
+  }
+}
+
+mutation UpdateQuestionnaire($input: UpdateQuestionnaireInput!) {
+  updateQuestionnaire(input: $input) {
+    id
+    user_id
+    title
+    description
+    is_public
+    expiry_date
+  }
+}
+
+mutation DeleteQuestionnaire($id: String!) {
+  deleteQuestionnaire(id: $id)
+}
