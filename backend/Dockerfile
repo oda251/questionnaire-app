@@ -1,4 +1,15 @@
-FROM node:18-alpine
+FROM node:23-bullseye-slim as development
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+FROM node:23-bullseye-slim as production
 
 WORKDIR /app
 
