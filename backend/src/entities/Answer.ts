@@ -6,7 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Response } from './Response';
 import { Question } from './Question';
 import { Choice } from './Choice';
@@ -18,20 +18,20 @@ export class Answer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   response_id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   question_id: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
   choice_id: number | null;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  @Column({ type: 'text', nullable: true })
   text_answer: string | null;
 
   @Field()

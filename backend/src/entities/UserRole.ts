@@ -9,22 +9,22 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from './User';
-import { Organization } from './Organization';
+import { Role } from './Role';
 
 @ObjectType()
-@Entity('user_organizations')
-export class UserOrganization {
+@Entity('user_roles')
+export class UserRole {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   user_id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
-  organization_id: number;
+  role_id: number;
 
   @Field()
   @CreateDateColumn()
@@ -35,14 +35,11 @@ export class UserOrganization {
   updated_at: Date;
 
   // Relations
-  @ManyToOne(() => User, (user) => user.userOrganizations)
+  @ManyToOne(() => User, (user) => user.userRoles)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(
-    () => Organization,
-    (organization) => organization.userOrganizations,
-  )
-  @JoinColumn({ name: 'organization_id' })
-  organization: Organization;
+  @ManyToOne(() => Role, (role) => role.userRoles)
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 }

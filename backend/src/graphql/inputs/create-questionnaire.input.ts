@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
 import {
   IsString,
   MinLength,
@@ -8,15 +8,19 @@ import {
   ArrayMinSize,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { CreateQuestionInput } from './create-question.input';
 
 @InputType()
 export class CreateQuestionnaireInput {
-  @Field()
+  @Field(() => ID)
+  user_id: number;
+
+  @Field(() => String)
   @IsString()
   @MinLength(3)
   title: string;
 
-  @Field()
+  @Field(() => String)
   @IsString()
   description: string;
 
@@ -26,27 +30,17 @@ export class CreateQuestionnaireInput {
 
   @Field(() => Date, { nullable: true })
   @IsOptional()
-  expiry_date?: Date | null; // 回答期限
+  expiry_date?: Date | null;
+
+  @Field(() => [ID])
+  @ValidateNested({ each: true })
+  @Type(() => Number)
+  @ArrayMinSize(1)
+  organization_ids: number[];
 
   @Field(() => [CreateQuestionInput])
   @ValidateNested({ each: true })
   @Type(() => CreateQuestionInput)
   @ArrayMinSize(1)
   questions: CreateQuestionInput[];
-}
-
-@InputType()
-export class CreateQuestionInput {
-  @Field()
-  @IsString()
-  @MinLength(1)
-  question_text: string;
-
-  @Field()
-  @IsBoolean()
-  is_required: boolean;
-
-  @Field(() => [String])
-  @ArrayMinSize(1)
-  choices: string[];
 }

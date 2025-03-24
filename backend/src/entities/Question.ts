@@ -31,17 +31,17 @@ export class Question {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => ID)
   @Column()
   questionnaire_id: number;
 
-  @Field()
+  @Field(() => String)
   @Column()
   question_text: string;
 
   @Field(() => QuestionType)
   @Column({
-    type: 'enum',
+    type: 'text',
     enum: QuestionType,
   })
   question_type: QuestionType;

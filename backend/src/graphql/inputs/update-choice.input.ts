@@ -7,7 +7,7 @@ export class UpdateChoiceInput {
   @IsInt()
   id: number;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   @IsOptional()
   @IsString()
   @MinLength(1)

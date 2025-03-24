@@ -1,18 +1,27 @@
-import { Module, Request } from '@nestjs/common';
+import { Module, type Request } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { typeOrmConfig } from './config/database.config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserResolver } from './graphql/resolvers/user.resolver';
-import { UserService } from './services/user.service';
-import { OrganizationResolver } from './graphql/resolvers/organization.resolver';
-import { OrganizationService } from './services/organization.service';
-import { RoleResolver } from './graphql/resolvers/role.resolver';
-import { RoleService } from './services/role.service';
-import { QuestionnaireModule } from './questionnaire/questionnaire.module';
+import {
+  Organization,
+  Role,
+  Questionnaire,
+  Question,
+  Response,
+  UserOrganization,
+  UserRole,
+  Answer,
+  Choice,
+} from '@/entities';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './modules/user.module';
+import { OrganizationModule } from './modules/organization.module';
+import { RoleModule } from './modules/role.module';
+import { QuestionnaireModule } from './modules/questionnaire.module';
+import { QuestionModule } from './modules/question.module';
+import { ChoiceModule } from './modules/choice.module';
 
 export interface GraphQLContext {
   req: Request;
@@ -22,6 +31,17 @@ export interface GraphQLContext {
   imports: [
     // TypeORMモジュールをインポート
     TypeOrmModule.forRoot(typeOrmConfig),
+    TypeOrmModule.forFeature([
+      Organization,
+      Role,
+      Questionnaire,
+      Question,
+      Response,
+      UserOrganization,
+      UserRole,
+      Answer,
+      Choice,
+    ]),
 
     // GraphQLモジュールをインポート
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -31,17 +51,16 @@ export interface GraphQLContext {
       playground: process.env.NODE_ENV !== 'production',
       context: ({ req }: { req: Request }): GraphQLContext => ({ req }),
     }),
+
+    // カスタムModuleをインポート
+    AuthModule,
+    UserModule,
+    OrganizationModule,
+    RoleModule,
     QuestionnaireModule,
+    QuestionModule,
+    ChoiceModule,
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    UserResolver,
-    UserService,
-    OrganizationResolver,
-    OrganizationService,
-    RoleResolver,
-    RoleService,
-  ],
+  providers: [],
 })
 export class AppModule {}

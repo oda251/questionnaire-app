@@ -18,11 +18,11 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => String)
   @Column()
   name: string;
 
-  @Field()
+  @Field(() => String)
   @Column({ unique: true })
   email: string;
 
@@ -50,3 +50,8 @@ export class User {
   @OneToMany(() => UserRole, (userRole) => userRole.user)
   userRoles: UserRole[];
 }
+
+export type UserDto = Omit<
+  User,
+  'questionnaires' | 'userOrganizations' | 'userRoles'
+>;
