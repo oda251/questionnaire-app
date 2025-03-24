@@ -14,7 +14,7 @@ export class OrganizationResolver {
   }
 
   @Query(() => Organization)
-  async organization(@Args('id') id: number): Promise<Organization> {
+  async organization(@Args('id') id: string): Promise<Organization> {
     return this.organizationService.findOne(id);
   }
 
@@ -33,7 +33,7 @@ export class OrganizationResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteOrganization(@Args('id') id: number): Promise<boolean> {
+  async deleteOrganization(@Args('id') id: string): Promise<boolean> {
     await this.organizationService.remove(id);
     return true;
   }

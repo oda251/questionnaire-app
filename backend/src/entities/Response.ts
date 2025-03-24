@@ -10,17 +10,18 @@ import {
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Questionnaire } from './Questionnaire';
 import { Answer } from './Answer';
+import { User } from './User';
 
 @ObjectType()
 @Entity('responses')
 export class Response {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => ID)
   @Column()
-  questionnaire_id: number;
+  questionnaire_id: string;
 
   @Field(() => String)
   @Column()
@@ -39,6 +40,13 @@ export class Response {
   @JoinColumn({ name: 'questionnaire_id' })
   questionnaire: Questionnaire;
 
-  @OneToMany(() => Answer, (answer) => answer.response)
+  @ManyToOne(() => User, (user) => user.responses)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
+  @OneToMany(() => Answer, (answer) => answer.response, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   answers: Answer[];
 }

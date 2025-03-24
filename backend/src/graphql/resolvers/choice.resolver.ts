@@ -18,7 +18,7 @@ export class ChoiceResolver {
 
   @Query(() => Choice)
   @UseGuards(GqlAuthGuard)
-  async choice(@Args('id') id: number): Promise<Choice> {
+  async choice(@Args('id') id: string): Promise<Choice> {
     return this.choiceService.findOne(id);
   }
 
@@ -36,7 +36,7 @@ export class ChoiceResolver {
 
   @Mutation(() => Boolean)
   @UseGuards(GqlAuthGuard)
-  async deleteChoice(@Args('id') id: number): Promise<boolean> {
+  async deleteChoice(@Args('id') id: string): Promise<boolean> {
     await this.choiceService.remove(id);
     return true;
   }

@@ -64,16 +64,22 @@ export class QuestionService {
     return this.questionRepository.find();
   }
 
-  async findOne(id: number): Promise<Question> {
+  async findByQuestionnaireId(questionnaireId: string): Promise<Question[]> {
+    return this.questionRepository.find({
+      where: { questionnaire_id: questionnaireId },
+    });
+  }
+
+  async findOne(id: string): Promise<Question> {
     return this.questionRepository.findOneOrFail({ where: { id: id } });
   }
 
-  async update(id: number, input: UpdateQuestionInput): Promise<Question> {
+  async update(id: string, input: UpdateQuestionInput): Promise<Question> {
     await this.questionRepository.update(id, input);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.questionRepository.delete(id);
   }
 }

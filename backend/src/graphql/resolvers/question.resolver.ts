@@ -1,12 +1,23 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { QuestionService } from '../../services/question.service';
-import { Question } from '../../entities';
+import { ChoiceService } from '../../services/choice.service';
+import { Question, Choice } from '../../entities';
 import { CreateQuestionInput } from '../inputs/create-question.input';
 import { UpdateQuestionInput } from '../inputs/update-question.input';
 
 @Resolver(() => Question)
 export class QuestionResolver {
-  constructor(private questionService: QuestionService) {}
+  constructor(
+    private questionService: QuestionService,
+    private choiceService: ChoiceService,
+  ) {}
 
   @Query(() => [Question])
   async questions(): Promise<Question[]> {
@@ -14,7 +25,7 @@ export class QuestionResolver {
   }
 
   @Query(() => Question)
-  async question(@Args('id') id: number): Promise<Question> {
+  async question(@Args('id') id: string): Promise<Question> {
     return this.questionService.findOne(id);
   }
 
@@ -33,8 +44,13 @@ export class QuestionResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteQuestion(@Args('id') id: number): Promise<boolean> {
+  async deleteQuestion(@Args('id') id: string): Promise<boolean> {
     await this.questionService.remove(id);
     return true;
+  }
+
+  @ResolveField(() => [Choice])
+  async choices(@Parent() question: Question): Promise<Choice[]> {
+    return this.choiceService.findByQuestionId(question.id);
   }
 }

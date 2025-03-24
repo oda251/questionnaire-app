@@ -16,19 +16,19 @@ import { Choice } from './Choice';
 export class Answer {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => ID)
   @Column()
-  response_id: number;
+  response_id: string;
 
   @Field(() => ID)
   @Column()
-  question_id: number;
+  question_id: string;
 
   @Field(() => ID, { nullable: true })
   @Column({ nullable: true })
-  choice_id: number | null;
+  choice_id: string | null;
 
   @Field(() => String, { nullable: true })
   @Column({ type: 'text', nullable: true })
@@ -47,7 +47,9 @@ export class Answer {
   @JoinColumn({ name: 'question_id' })
   question: Question;
 
-  @ManyToOne(() => Choice, (choice) => choice.answers)
+  @ManyToOne(() => Choice, (choice) => choice.answers, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'choice_id' })
   choice: Choice | null;
 }

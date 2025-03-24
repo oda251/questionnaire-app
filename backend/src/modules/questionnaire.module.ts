@@ -2,16 +2,11 @@ import { Module } from '@nestjs/common';
 import { QuestionnaireService } from '../services/questionnaire.service';
 import { QuestionnaireResolver } from '../graphql/resolvers/questionnaire.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Questionnaire, Question, QuestionnaireOrganization } from '@/entities';
+import { Questionnaire } from '@/entities';
+import { QuestionModule } from './question.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([
-      Questionnaire,
-      Question,
-      QuestionnaireOrganization,
-    ]),
-  ],
+  imports: [TypeOrmModule.forFeature([Questionnaire]), QuestionModule],
   providers: [QuestionnaireService, QuestionnaireResolver],
   exports: [QuestionnaireService],
 })

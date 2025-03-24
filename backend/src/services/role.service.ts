@@ -21,16 +21,16 @@ export class RoleService {
     return this.roleRepository.find();
   }
 
-  async findOne(id: number): Promise<Role> {
+  async findOne(id: string): Promise<Role> {
     return this.roleRepository.findOneOrFail({ where: { id: id } });
   }
 
-  async update(id: number, input: UpdateRoleInput): Promise<Role> {
+  async update(id: string, input: UpdateRoleInput): Promise<Role> {
     await this.roleRepository.update(id, input);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.roleRepository.delete(id);
   }
 }

@@ -4,7 +4,6 @@ import {
   MinLength,
   IsOptional,
   IsBoolean,
-  IsInt,
   IsEnum,
 } from 'class-validator';
 import { QuestionType } from '../../entities';
@@ -12,8 +11,8 @@ import { QuestionType } from '../../entities';
 @InputType()
 export class UpdateQuestionInput {
   @Field(() => ID)
-  @IsInt()
-  id: number;
+  @IsString()
+  id: string;
 
   @Field(() => String, { nullable: true })
   @IsOptional()

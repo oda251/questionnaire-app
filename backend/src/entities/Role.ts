@@ -4,17 +4,17 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UserRole } from './UserRole';
+import { User } from './User';
 
 @ObjectType()
 @Entity('roles')
 export class Role {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => String)
   @Column()
@@ -33,6 +33,11 @@ export class Role {
   updated_at: Date;
 
   // Relations
-  @OneToMany(() => UserRole, (userRole) => userRole.role)
-  userRoles: UserRole[];
+  @Field(() => [User], { nullable: true })
+  @ManyToMany(() => User, (user) => user.roles, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  users: User[];
 }

@@ -4,18 +4,19 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { UserOrganization } from './UserOrganization';
-import { QuestionnaireOrganization } from './QuestionnaireOrganization';
+import { Questionnaire } from './Questionnaire';
+import { User } from './User';
 
 @ObjectType()
 @Entity('organizations')
 export class Organization {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => String)
   @Column()
@@ -34,15 +35,29 @@ export class Organization {
   updated_at: Date;
 
   // Relations
-  @OneToMany(
-    () => UserOrganization,
-    (userOrganization) => userOrganization.organization,
-  )
-  userOrganizations: UserOrganization[];
+  @Field(() => [User], { nullable: true })
+  @ManyToMany(() => User, (user) => user.organizations, {
+    nullable: true,
+  })
+  @JoinTable({
+    name: 'user_organizations',
+    joinColumn: { name: 'organization_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'user_id', referencedColumnName: 'id' },
+  })
+  user: User[];
 
-  @OneToMany(
-    () => QuestionnaireOrganization,
-    (questionnaireOrganization) => questionnaireOrganization.organization,
+  @Field(() => [Questionnaire], { nullable: true })
+  @ManyToMany(
+    () => Questionnaire,
+    (questionnaire) => questionnaire.organizations,
+    {
+      nullable: true,
+    },
   )
-  questionnaireOrganizations: QuestionnaireOrganization[];
+  @JoinTable({
+    name: 'organization_questionnaires',
+    joinColumn: { name: 'organization_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'questionnaire_id', referencedColumnName: 'id' },
+  })
+  questionnaires: Questionnaire[];
 }

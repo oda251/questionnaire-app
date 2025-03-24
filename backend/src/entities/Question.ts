@@ -29,11 +29,11 @@ registerEnumType(QuestionType, {
 export class Question {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => ID)
   @Column()
-  questionnaire_id: number;
+  questionnaire_id: string;
 
   @Field(() => String)
   @Column()
@@ -63,9 +63,17 @@ export class Question {
   @JoinColumn({ name: 'questionnaire_id' })
   questionnaire: Questionnaire;
 
-  @OneToMany(() => Choice, (choice) => choice.question)
+  @OneToMany(() => Choice, (choice) => choice.question, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   choices: Choice[];
 
-  @OneToMany(() => Answer, (answer) => answer.question)
+  @OneToMany(() => Answer, (answer) => answer.question, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   answers: Answer[];
 }

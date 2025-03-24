@@ -5,18 +5,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Questionnaire } from './Questionnaire';
-import { UserOrganization } from './UserOrganization';
-import { UserRole } from './UserRole';
+import { Organization } from './Organization';
+import { Response } from './Response';
+import { Role } from './Role';
 
 @ObjectType()
 @Entity('users')
 export class User {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => String)
   @Column()
@@ -41,14 +44,27 @@ export class User {
   @OneToMany(() => Questionnaire, (questionnaire) => questionnaire.user)
   questionnaires: Questionnaire[];
 
-  @OneToMany(
-    () => UserOrganization,
-    (userOrganization) => userOrganization.user,
-  )
-  userOrganizations: UserOrganization[];
+  @OneToMany(() => Response, (response) => response.user)
+  responses: Response[];
 
-  @OneToMany(() => UserRole, (userRole) => userRole.user)
-  userRoles: UserRole[];
+  @Field(() => [Organization], { nullable: true })
+  @ManyToMany(() => Organization, (organization) => organization.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  organizations: Organization[];
+
+  @Field(() => [Role], { nullable: true })
+  @ManyToMany(() => Role, (role) => role.users, {
+    nullable: true,
+  })
+  @JoinTable({
+    name: 'user_roles',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+  })
+  roles: Role[];
 }
 
 export type UserDto = Omit<

@@ -10,8 +10,6 @@ import {
   Questionnaire,
   Question,
   Response,
-  UserOrganization,
-  UserRole,
   Answer,
   Choice,
 } from '@/entities';
@@ -37,8 +35,6 @@ export interface GraphQLContext {
       Questionnaire,
       Question,
       Response,
-      UserOrganization,
-      UserRole,
       Answer,
       Choice,
     ]),

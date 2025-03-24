@@ -17,11 +17,11 @@ import { Answer } from './Answer';
 export class Choice {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => ID)
   @Column()
-  question_id: number;
+  question_id: string;
 
   @Field(() => String)
   @Column()

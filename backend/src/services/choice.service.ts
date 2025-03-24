@@ -21,16 +21,20 @@ export class ChoiceService {
     return this.choiceRepository.find();
   }
 
-  async findOne(id: number): Promise<Choice> {
+  async findByQuestionId(questionId: string): Promise<Choice[]> {
+    return this.choiceRepository.find({ where: { question_id: questionId } });
+  }
+
+  async findOne(id: string): Promise<Choice> {
     return this.choiceRepository.findOneOrFail({ where: { id: id } });
   }
 
-  async update(id: number, input: UpdateChoiceInput): Promise<Choice> {
+  async update(id: string, input: UpdateChoiceInput): Promise<Choice> {
     await this.choiceRepository.update(id, input);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.choiceRepository.delete(id);
   }
 }

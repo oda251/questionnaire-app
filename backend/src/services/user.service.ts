@@ -24,21 +24,21 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOne(options: { id?: number; email?: string }): Promise<User> {
+  async findOne(options: { id?: string; email?: string }): Promise<User> {
     if (!options.id && !options.email) {
       throw new Error('id or email is required');
     }
     return this.userRepository.findOneOrFail({ where: options });
   }
 
-  async update(id: number, input: UpdateUserInput): Promise<User> {
+  async update(id: string, input: UpdateUserInput): Promise<User> {
     await this.userRepository.update(id, input);
     return this.findOne({
       id: id,
     });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.userRepository.delete(id);
   }
 }

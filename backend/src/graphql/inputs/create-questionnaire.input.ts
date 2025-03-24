@@ -13,7 +13,7 @@ import { CreateQuestionInput } from './create-question.input';
 @InputType()
 export class CreateQuestionnaireInput {
   @Field(() => ID)
-  user_id: number;
+  user_id: string;
 
   @Field(() => String)
   @IsString()
@@ -34,9 +34,9 @@ export class CreateQuestionnaireInput {
 
   @Field(() => [ID])
   @ValidateNested({ each: true })
-  @Type(() => Number)
+  @Type(() => String)
   @ArrayMinSize(1)
-  organization_ids: number[];
+  organization_ids: string[];
 
   @Field(() => [CreateQuestionInput])
   @ValidateNested({ each: true })

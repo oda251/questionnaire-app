@@ -14,7 +14,7 @@ export class RoleResolver {
   }
 
   @Query(() => Role)
-  async role(@Args('id') id: number): Promise<Role> {
+  async role(@Args('id') id: string): Promise<Role> {
     return this.roleService.findOne(id);
   }
 
@@ -29,7 +29,7 @@ export class RoleResolver {
   }
 
   @Mutation(() => Boolean)
-  async deleteRole(@Args('id') id: number): Promise<boolean> {
+  async deleteRole(@Args('id') id: string): Promise<boolean> {
     await this.roleService.remove(id);
     return true;
   }

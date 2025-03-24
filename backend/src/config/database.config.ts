@@ -1,12 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import {
   User,
-  UserOrganization,
   Questionnaire,
-  QuestionnaireOrganization,
   Question,
   Response,
-  UserRole,
   Organization,
   Role,
   Answer,
@@ -43,11 +40,8 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: [
     User,
     Questionnaire,
-    QuestionnaireOrganization,
     Question,
     Response,
-    UserOrganization,
-    UserRole,
     Organization,
     Role,
     Answer,

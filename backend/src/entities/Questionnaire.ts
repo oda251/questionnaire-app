@@ -7,23 +7,25 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  Generated,
+  ManyToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from './User';
-import { QuestionnaireOrganization } from './QuestionnaireOrganization';
 import { Question } from './Question';
 import { Response } from './Response';
+import { Organization } from './Organization';
 
 @ObjectType()
 @Entity('questionnaires')
 export class Questionnaire {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field(() => ID)
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Field(() => String)
   @Column()
@@ -34,6 +36,7 @@ export class Questionnaire {
   description: string;
 
   @Field(() => String)
+  @Generated('uuid')
   @Column()
   access_url: string;
 
@@ -54,19 +57,35 @@ export class Questionnaire {
   updated_at: Date;
 
   // Relations
-  @ManyToOne(() => User, (user) => user.questionnaires)
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, (user) => user.questionnaires, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: User;
 
-  @OneToMany(
-    () => QuestionnaireOrganization,
-    (questionnaireOrganization) => questionnaireOrganization.questionnaire,
+  @Field(() => [Organization], { nullable: true })
+  @ManyToMany(
+    () => Organization,
+    (organization) => organization.questionnaires,
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+      nullable: true,
+    },
   )
-  questionnaireOrganizations: QuestionnaireOrganization[];
+  organizations: Organization[];
 
-  @OneToMany(() => Question, (question) => question.questionnaire)
+  @OneToMany(() => Question, (question) => question.questionnaire, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   questions: Question[];
 
-  @OneToMany(() => Response, (response) => response.questionnaire)
+  @OneToMany(() => Response, (response) => response.questionnaire, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
   responses: Response[];
 }

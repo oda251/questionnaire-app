@@ -60,12 +60,12 @@ type Mutation {
   createQuestionnaire(input: CreateQuestionnaireInput!): Questionnaire!
   createRole(input: CreateRoleInput!): Role!
   createUser(input: CreateUserInput!): User!
-  deleteChoice(id: Float!): Boolean!
-  deleteOrganization(id: Float!): Boolean!
-  deleteQuestion(id: Float!): Boolean!
-  deleteQuestionnaire(id: Float!): Boolean!
-  deleteRole(id: Float!): Boolean!
-  deleteUser(id: Float!): Boolean!
+  deleteChoice(id: String!): Boolean!
+  deleteOrganization(id: String!): Boolean!
+  deleteQuestion(id: String!): Boolean!
+  deleteQuestionnaire(id: String!): Boolean!
+  deleteRole(id: String!): Boolean!
+  deleteUser(id: String!): Boolean!
   updateChoice(input: UpdateChoiceInput!): Choice!
   updateOrganization(input: UpdateOrganizationInput!): Organization!
   updateQuestion(input: UpdateQuestionInput!): Question!
@@ -79,25 +79,29 @@ type Organization {
   description: String!
   id: ID!
   name: String!
+  questionnaires: [Questionnaire!]
   updated_at: DateTime!
+  user: [User!]
 }
 
 type Query {
-  choice(id: Float!): Choice!
+  choice(id: String!): Choice!
   choices: [Choice!]!
-  organization(id: Float!): Organization!
+  organization(id: String!): Organization!
   organizations: [Organization!]!
-  question(id: Float!): Question!
-  questionnaire(id: Float!): Questionnaire!
+  question(id: String!): Question!
+  questionnaire(id: String!): Questionnaire!
   questionnaires: [Questionnaire!]!
+  questionnairesByUserId(userId: String!): [Questionnaire!]!
   questions: [Question!]!
-  role(id: Float!): Role!
+  role(id: String!): Role!
   roles: [Role!]!
-  user(id: Float!): User!
+  user(id: String!): User!
   users: [User!]!
 }
 
 type Question {
+  choices: [Choice!]!
   created_at: DateTime!
   id: ID!
   is_required: Boolean!
@@ -121,6 +125,8 @@ type Questionnaire {
   expiry_date: DateTime
   id: ID!
   is_public: Boolean!
+  organizations: [Organization!]
+  questions: [Question!]!
   title: String!
   updated_at: DateTime
   user_id: ID!
@@ -132,6 +138,7 @@ type Role {
   id: ID!
   name: String!
   updated_at: DateTime!
+  users: [User!]
 }
 
 input UpdateChoiceInput {
@@ -178,5 +185,7 @@ type User {
   email: String!
   id: ID!
   name: String!
+  organizations: [Organization!]
+  roles: [Role!]
   updated_at: DateTime!
 }

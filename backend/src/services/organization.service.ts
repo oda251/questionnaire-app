@@ -21,19 +21,19 @@ export class OrganizationService {
     return this.organizationRepository.find();
   }
 
-  async findOne(id: number): Promise<Organization> {
+  async findOne(id: string): Promise<Organization> {
     return this.organizationRepository.findOneOrFail({ where: { id: id } });
   }
 
   async update(
-    id: number,
+    id: string,
     input: UpdateOrganizationInput,
   ): Promise<Organization> {
     await this.organizationRepository.update(id, input);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.organizationRepository.delete(id);
   }
 }
